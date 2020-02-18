@@ -1,0 +1,82 @@
+/*BALAN Giorgiana-Lavinia - 311 CB*/
+
+
+						-Tema 3 SD-
+
+	Pentru realizarea acestei teme am construit 3 fisiere: un fisier header 
+(declarare.h) si doua fisiere sursa (main.c si functii.c).
+
+-> Fisierul header declarare.h: acesta contine structura pentru arbore si 
+inca o structura pentru asignari (structura care contine numele variabilei 
+si valoarea sa numerica). De asemenea, fisierul contine si declararile 
+functiilor implementate si utilizate in celelalte doua fisiere.
+
+-> Fisierul functii.c contine toate functiile implementate pentru rezolvarea 
+cerintelor temei.
+
+	- Functia BuildNod de tip TArb construieste un nod cu informatia data ca 
+	parametru: aloc dinamic structura pentru nod si verific, ii setez campul 
+	info ca fiind informatia data ca parametru si campurile stanga si drepata 
+	cu NULL;
+
+	- Functia TypeOp de tip int returneaza un cod in functie de tipul 
+	operatorului dat ca parametru (char*) prin intermediul functiei strcmp 
+	care imi compara elementul dat ca parametru cu fiecare semn(operator) 
+	in parte. Functia intoarce 0 in cazul in care elementul nu este operator, 
+	deci este variabila sau numar.
+
+	- Functia BuildArb construieste un arbore al expresiei data de linia 
+	corespunzatoare din fisierul de intrare si primita ca parametru de functie.
+	Functia este recursiva si construieste primul nod , in cazul in care 
+	informatia din nod e semn se construieste arborele stang, iar cel drept 
+	este construit doar daca operatorul nu este sqrt. Arborele creat este 
+	intors la finalul functiei.
+
+	- Functia Calculeaza, de tip int returneaza rezultatul operatiei realizate
+	cu termenii dati ca parametru (numere intregi). Operatia ce urmeaza a fi 
+	realizata este identificata printr-un cod unic dat ca parametru functiei.
+	De asemenea , functia intoarce prin efect lateral un "valid" care indica daca
+	operatia este valida sau nu, mai exact daca codul dat ca parametru indica o 
+	operatie sau un operand sau daca, in cazul imapartirii am de-a face cu un 
+	numitor nul. 
+
+	- Functia Valoare de tip int returneaza valoarea operandului in cazul in 
+	care acesta nu este operator. Iau primul caracter din sirul de caractere 
+	dat ca parametru, sir care reprezinta elementul din expresie caruia ii 
+	trebuie returnata valoarea. Daca primul caracter al sirului este semnul 
+	minus sau o cifra inseamna ca sirul este numar, daca nu, este variabila.
+	Daca este variabila, ii caut valoarea in vectorul de asignari dat ca 
+	parametru, iar daca nu o gasesc afisez in out mesajul conform caruia 
+	variabila respectiva nu este declarata.
+
+	- Functia Evalueaza de tip int este o functie recursiva si calculeaza 
+	rezultatul expresiei dorite. Verific separat cazul in care informatia 
+	din nodul arborelui dat ca parametru este semnul radical si apelez 
+	recursiv functia Evalueaza doar pe arborele stang. In cazul celoralati 
+	operatori apelez recursiv functia Evalueaza atat pe arborele stang cat si 
+	pe cel drept. Daca informatia nu este operator returnez valoarea 
+	operandului prin apelul functiei Valoare.
+
+	- Functia RezolvaExpr de tip void scrie in fisierul out rezultatul expresiei
+	calculat de functia Evalueaza sau "Invalid expression" daca expresia de 
+	calculat nu este valida.
+
+	- Functia DistrugeArb realizeaza dezalocarea spatiului ocupat de arborele 
+	dat ca parametru. Functia de distrugere este apelata la finalul functiei 
+	RezolvaExpr.
+
+
+-> Fisierul main.c cuprinde functia principala in care deschid fisierele de 
+intrare si iesire, citesc din fisierul de input datele pe care le retin.
+Pentru variabile creez un vector de structuri (variabila si valoare). 
+Pentru fiecare expresie citita apelez functia RezolvaExpr care scrie in output 
+valoarea finala a expresiei.
+
+	!La initializarea vectorului de asignari in acest mod: TAsign vec_asign[50] = {0}
+primeam la complilare ca warning un mesaj "missing braces around initializer".
+Am cautat pe internet si am aflat ca este un bug al gcc-ului si am introdus in 
+Makefile la compilare optiunea -Wno-missing-braces pentru a nu mai avea acest 
+warning.
+
+	In ceea ce priveste punctajul temei, mentionez ca primesc 105 puncte atat
+pe masina locala, cat si pe vmchecker. 
